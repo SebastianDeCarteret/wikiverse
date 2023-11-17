@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { DeleteArticle } from "./DeleteArticle";
 
-export function Article({ slug }) {
+export function Article({ slug, resetArticle }) {
   const [articleData, setArticleData] = useState();
 
   useEffect(() => {
@@ -11,37 +12,35 @@ export function Article({ slug }) {
     const response = await fetch(`http://localhost:3000/api/wiki/${slug}`);
     const data = await response.json();
     setArticleData(data);
-    console.log(articleData);
   }
 
   const loaded = () => (
-    <div className="article">
-      <h1>{articleData.title}</h1>
-      <p>
-        <b>Auther:</b> {articleData.author.name}
-      </p>
-      <p>
-        <b>Published:</b>{" "}
-        {articleData.createdAt
-          .slice(0, articleData.createdAt.lastIndexOf("T"))
-          .split("-")
-          .reverse()
-          .join("/")}
-      </p>
-      <p>{articleData.content}</p>
-      <p>
-        <b>Tags:</b>
-      </p>
-      {articleData.tags.map((tag) => (
-        <p key={tag.id}>{tag.name}</p>
-      ))}
-    </div>
+    <>
+      <div className="article">
+        <h1>{articleData.title}</h1>
+        <p>
+          <b>Auther:</b> {articleData.author.name}
+        </p>
+        <p>
+          <b>Published:</b>{" "}
+          {articleData.createdAt
+            .slice(0, articleData.createdAt.lastIndexOf("T"))
+            .split("-")
+            .reverse()
+            .join("/")}
+        </p>
+        <p>{articleData.content}</p>
+        <p>
+          <b>Tags:</b>
+        </p>
+        {articleData.tags.map((tag) => (
+          <p key={tag.id}>{tag.name}</p>
+        ))}
+      </div>
+      <br />
+      <DeleteArticle slug={slug} resetArticle={resetArticle}></DeleteArticle>
+      <button onClick={resetArticle}>Back to Wiki List</button>
+    </>
   );
-  return (
-    <>{articleData ? loaded() : "loading"}</>
-    // <div className="article">
-    //   <h1>{articleData.title}</h1>
-    // </div>
-    //   <p>{JSON.stringify(articleData)}</p>);
-  );
+  return <>{articleData ? loaded() : "loading"}</>;
 }
