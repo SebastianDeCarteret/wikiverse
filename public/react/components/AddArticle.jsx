@@ -61,6 +61,7 @@ export function AddArticle({ setIsAddingArticle }) {
         onChange={(e) => setTags(e.target.value)}
         placeholder="Tags"
       />
+      <br />
       <button className="confirm-green" type="submit">
         Create Page
       </button>

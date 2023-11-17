@@ -38,8 +38,9 @@ export function Article({ slug, resetArticle }) {
         ))}
       </div>
       <br />
-      <DeleteArticle slug={slug} resetArticle={resetArticle}></DeleteArticle>
       <button onClick={resetArticle}>Back to Wiki List</button>
+      <> </>
+      <DeleteArticle slug={slug} resetArticle={resetArticle}></DeleteArticle>
     </>
   );
   return <>{articleData ? loaded() : "loading"}</>;
